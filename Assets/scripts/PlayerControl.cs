@@ -1,3 +1,5 @@
+using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -53,27 +55,25 @@ public class PlayerControl : MonoBehaviour
         {
             _playerVelocity.y = 0f;
         }
-
-        // Input
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 movementInput = Quaternion.Euler(0, _followCamera.transform.eulerAngles.y, 0) 
             * new Vector3(horizontalInput, 0, verticalInput);
+
         Vector3 movementDirection = movementInput.normalized;
 
-        // Running
-        bool isRunning = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && movementDirection.magnitude > 0.1f;
+        bool isMoving = movementDirection.magnitude > 0.1f;
+
+        bool isRunning = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && isMoving;
+
         _playerSpeed = isRunning ? _runSpeed : _walkSpeed;
 
-        // Move character
         _controller.Move(movementDirection * _playerSpeed * Time.deltaTime);
 
-        // Animator
-        bool isMoving = movementDirection.magnitude > 0.1f;
-        _animator.SetBool("walking", isMoving);
-        _animator.SetBool("running", isRunning&&isMoving);
-        
+        float speedValue = movementDirection.magnitude * (isRunning ? 1f : 0.5f);
+        _animator.SetFloat("Speed", speedValue);
+                
 
         // Rotate player
         if (movementDirection != Vector3.zero)
@@ -83,13 +83,13 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetButtonDown("Jump") && _groundedPlayer)
-        {
-            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
-        }
+        // if (Input.GetButtonDown("Jump") && _groundedPlayer)
+        // {
+        //     _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+        // }
 
-        // Gravity
-        _playerVelocity.y += _gravityValue * Time.deltaTime;
-        _controller.Move(_playerVelocity * Time.deltaTime);
+        // // Gravity
+        // _playerVelocity.y += _gravityValue * Time.deltaTime;
+        // _controller.Move(_playerVelocity * Time.deltaTime);
     }
 }

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7705490873990527770}
+  - component: {fileID: 168393124338972229}
   m_Layer: 0
   m_Name: Window With Border Ground
   m_TagString: Untagged
@@ -33,6 +34,27 @@ Transform:
   - {fileID: 8060090029884821070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &168393124338972229
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528119402341068981}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.955536, y: 4.6181006, z: 0.33500195}
+  m_Center: {x: 0.022033691, y: -0.116984606, z: 0.14433146}
 --- !u!1 &7996749055446025175
 GameObject:
   m_ObjectHideFlags: 0
