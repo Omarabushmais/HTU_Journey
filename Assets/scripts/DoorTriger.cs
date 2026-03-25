@@ -20,11 +20,9 @@ public class DoorTriger : MonoBehaviour
 
     void Start()
     {
-        // حفظ مكان الإغلاق
         leftClosedPos = leftDoor.position;
         rightClosedPos = rightDoor.position;
 
-        // تحديد مكان الفتح
         leftOpenPos = leftClosedPos - Vector3.left * openDistance;
         rightOpenPos = rightClosedPos - Vector3.right * openDistance;
     }
