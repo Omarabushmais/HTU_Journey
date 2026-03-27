@@ -51,9 +51,9 @@ public class PlayerControl : MonoBehaviour
     {
         _groundedPlayer = _controller.isGrounded;
 
-        if (_groundedPlayer && _playerVelocity.y < 0)
+       if (_groundedPlayer && _playerVelocity.y < 0)
         {
-            _playerVelocity.y = 0f;
+            _playerVelocity.y = -2f; // 👈 مهم جدًا
         }
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -83,13 +83,13 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Jump
-        // if (Input.GetButtonDown("Jump") && _groundedPlayer)
-        // {
-        //     _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
-        // }
+        if (Input.GetButtonDown("Jump") && _groundedPlayer)
+        {
+            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+        }
 
         // // Gravity
-        // _playerVelocity.y += _gravityValue * Time.deltaTime;
-        // _controller.Move(_playerVelocity * Time.deltaTime);
+        _playerVelocity.y += _gravityValue * Time.deltaTime;
+        _controller.Move(_playerVelocity * Time.deltaTime);
     }
 }
