@@ -23,8 +23,8 @@ public class DoorTriger : MonoBehaviour
         leftClosedPos = leftDoor.position;
         rightClosedPos = rightDoor.position;
 
-        leftOpenPos = leftClosedPos - Vector3.left * openDistance;
-        rightOpenPos = rightClosedPos - Vector3.right * openDistance;
+        leftOpenPos = leftClosedPos + leftDoor.right * openDistance;
+        rightOpenPos = rightClosedPos - rightDoor.right * openDistance;
     }
 
     void Update()
