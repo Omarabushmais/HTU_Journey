@@ -1,5 +1,4 @@
 using System;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -19,10 +18,16 @@ public class PlayerControl : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Camera _followCamera;
 
+
     private Vector3 _playerVelocity;
     private bool _groundedPlayer;
 
     private float _playerSpeed;
+
+    private float _horizontalInput;
+    private float _verticalInput;
+    private bool _jumpPressed;
+    private bool _runPressed;
 
     private void Start()
     {
@@ -30,42 +35,51 @@ public class PlayerControl : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
 
         if (_controller == null)
-        {
-            Debug.LogError("CharacterController is missing on this GameObject!");
-        }
+            Debug.LogError("CharacterController is missing!");
 
         if (_animator == null)
-        {
-            Debug.LogError("Animator is missing on this GameObject!");
-        }
+            Debug.LogError("Animator is missing!");
 
         _playerSpeed = _walkSpeed;
     }
 
     private void Update()
     {
+        HandleInput();
         HandleMovement();
+        PlayerInputManager.Instance.ResetOneFrameInputs();
+
+    }
+
+    private void HandleInput()
+    {
+        var input = PlayerInputManager.Instance;
+
+        _horizontalInput = input.horizontal;
+        
+        _verticalInput = input.vertical;
+
+        _runPressed = input.runHeld;
+        _jumpPressed = input.jumpPressed;
     }
 
     private void HandleMovement()
     {
         _groundedPlayer = _controller.isGrounded;
 
-       if (_groundedPlayer && _playerVelocity.y < 0)
+        if (_groundedPlayer && _playerVelocity.y < 0)
         {
-            _playerVelocity.y = -2f; // 👈 مهم جدًا
+            _playerVelocity.y = -2f;
         }
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 movementInput = Quaternion.Euler(0, _followCamera.transform.eulerAngles.y, 0) 
-            * new Vector3(horizontalInput, 0, verticalInput);
+        // Movement direction relative to camera
+        Vector3 movementInput = Quaternion.Euler(0, _followCamera.transform.eulerAngles.y, 0)
+            * new Vector3(_horizontalInput, 0, _verticalInput);
 
         Vector3 movementDirection = movementInput.normalized;
 
         bool isMoving = movementDirection.magnitude > 0.1f;
-
-        bool isRunning = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && isMoving;
+        bool isRunning = _runPressed && isMoving;
 
         _playerSpeed = isRunning ? _runSpeed : _walkSpeed;
 
@@ -73,9 +87,8 @@ public class PlayerControl : MonoBehaviour
 
         float speedValue = movementDirection.magnitude * (isRunning ? 1f : 0.5f);
         _animator.SetFloat("Speed", speedValue);
-                
 
-        // Rotate player
+        // Rotation
         if (movementDirection != Vector3.zero)
         {
             Quaternion desiredRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
@@ -83,13 +96,16 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetButtonDown("Jump") && _groundedPlayer)
+        if (_jumpPressed && _groundedPlayer)
         {
             _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
         }
 
-        // // Gravity
+        // Gravity
         _playerVelocity.y += _gravityValue * Time.deltaTime;
         _controller.Move(_playerVelocity * Time.deltaTime);
+
     }
+
+  
 }

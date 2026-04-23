@@ -26,12 +26,10 @@ public class DoorHingeOpener : MonoBehaviour
         float currentAngle = hinge.angle;
         if (hinge == null)
         {
-            Debug.Log("it is null fix it brh");
         }
         if (isOpening)
         {
             
-                Debug.Log("it is opening now oh nooo");
 
                 motor.targetVelocity = motorSpeed;
                 motor.force = motorForce;
@@ -53,7 +51,6 @@ public class DoorHingeOpener : MonoBehaviour
 
     public void OpenDoor()
     {
-        Debug.Log("door opens");
 
         isOpening = true;
         isClosing = false;
@@ -61,7 +58,6 @@ public class DoorHingeOpener : MonoBehaviour
 
     public void CloseDoor()
     {
-                Debug.Log("door closes");
 
         isClosing = true;
         isOpening = false;
@@ -69,7 +65,6 @@ public class DoorHingeOpener : MonoBehaviour
 
     public void ToggleDoor(bool open)
     {
-        Debug.Log("the door should toogle now hehehe");
         if (open)
             OpenDoor();
         else

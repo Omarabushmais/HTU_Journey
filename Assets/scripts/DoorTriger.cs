@@ -43,7 +43,6 @@ public class DoorTriger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigereeddd");
         if (other.CompareTag("Player"))
         {
             isOpen = true;

@@ -9,75 +9,42 @@ public class NPC : MonoBehaviour
 
     private bool playerInZone = false;
     private bool isOpen = false;
-
     private ChatManager chatManager;
 
     private void Start()
     {
         interactPrompt.SetActive(false);
-        dialogueUI.SetActive(false);
-
-        chatManager = dialogueUI.GetComponent<ChatManager>();
     }
 
     private void Update()
     {
-        if (playerInZone && !isOpen && Input.GetKeyDown(KeyCode.E))
+        var input = PlayerInputManager.Instance;
+            
+        if (playerInZone && input.interactPressed)
         {
-            OpenDialogue();
-        }
-
-        if (isOpen && Input.GetKeyDown(KeyCode.Escape))
-        {
-            CloseDialogue();
+            ChatManager.Instance.OpenChat(npcId);
+            input.interactPressed = false;
+            interactPrompt.SetActive(false);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInZone = true;
-            if (!isOpen)
-                interactPrompt.SetActive(true);
-        }
+        if (!other.CompareTag("Player")) return;
+
+        playerInZone = true;
+        interactPrompt.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInZone = false;
-            interactPrompt.SetActive(false);
-        }
-    }
+        if (!other.CompareTag("Player")) return;
 
-    public void OpenDialogue()
-    {
-        isOpen = true;
+        playerInZone = false;
         interactPrompt.SetActive(false);
-        dialogueUI.SetActive(true);
-
-        if (chatManager != null)
-        {
-            chatManager.SetCurrentNpc(npcId);
-        }
-
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 
-    public void CloseDialogue()
-    {
-        isOpen = false;
-        dialogueUI.SetActive(false);
+   
 
-        if (playerInZone)
-            interactPrompt.SetActive(true);
 
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
 }

@@ -8,10 +8,24 @@ public class ChatManager : MonoBehaviour
     public TMP_InputField inputField;
     public Transform chatContent;
     public GameObject messagePrefab;
-
+    public GameObject dialogueUI;
+    bool isOpen;
+    public static ChatManager Instance;
     private string webhookUrl = "https://n8n.ez-moh-n8n.online/webhook/1ff1e150-7674-45fe-8506-52b62ebe928f";
 
     private string currentNpcId;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void SetCurrentNpc(string npcId)
     {
@@ -44,7 +58,7 @@ public class ChatManager : MonoBehaviour
     public void SendMessage()
     {
         string userMessage = inputField.text;
-
+        Debug.Log("what the fffff id is"+currentNpcId);
         if (string.IsNullOrEmpty(userMessage))
             return;
 
@@ -91,6 +105,31 @@ public class ChatManager : MonoBehaviour
         {
             Destroy(chatContent.GetChild(i).gameObject);
         }
+    }
+    public void OpenChat(string npcId)
+    {
+        currentNpcId = npcId;
+        Debug.Log("id in open chat is  is"+currentNpcId);
+
+        dialogueUI.SetActive(true);
+        isOpen = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        inputField.ActivateInputField();
+    }
+
+    public void CloseChat()
+    {
+        ClearCurrentNpcChat();
+        isOpen = false;
+        currentNpcId = null;
+        dialogueUI.SetActive(false);
+
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     IEnumerator SendToN8n(string message)
