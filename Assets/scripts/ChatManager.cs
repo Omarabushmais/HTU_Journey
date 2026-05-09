@@ -11,7 +11,7 @@ public class ChatManager : MonoBehaviour
     public GameObject dialogueUI;
     bool isOpen;
     public static ChatManager Instance;
-    private string webhookUrl = "https://n8n.ez-moh-n8n.online/webhook/1ff1e150-7674-45fe-8506-52b62ebe928f";
+    private string webhookUrl = "https://n8n.ez-moh-n8n.online/webhook/15d0ec83-3023-4871-8b5a-8bd3344f4266";
 
     private string currentNpcId;
 
@@ -146,6 +146,7 @@ public class ChatManager : MonoBehaviour
         };
 
         string json = JsonUtility.ToJson(requestData);
+                    Debug.Log("we are sending to this url" + webhookUrl);
 
         UnityWebRequest request = new UnityWebRequest(webhookUrl, "POST");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
