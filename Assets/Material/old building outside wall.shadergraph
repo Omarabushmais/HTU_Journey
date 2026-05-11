@@ -102,20 +102,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "bb6196ac00cd4f0c9230a8d3a1eb1f5a"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "2919cb0688fa4d53ad9fba3c6a39612c"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "beccd442f17c4416a5b398c655e269ca"
                 },
                 "m_SlotId": 2
@@ -302,7 +288,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Blend",
     "m_StageCapability": 3,
-    "m_Value": 1.0,
+    "m_Value": 0.20000000298023225,
     "m_DefaultValue": 1.0,
     "m_Labels": [],
     "m_LiteralMode": false
