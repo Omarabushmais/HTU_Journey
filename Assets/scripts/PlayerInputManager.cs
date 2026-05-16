@@ -12,6 +12,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool jumpPressed;
     public bool runHeld;
     public bool interactPressed;
+    public bool teleportPressed;
 
     [Header("Mobile")]
     [SerializeField] private Joystick joystick;
@@ -58,6 +59,10 @@ public class PlayerInputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
             interactPressed = true;
+
+        if (Input.GetKeyDown(KeyCode.T))
+            teleportPressed = true;
+            
     }
 
 
@@ -78,14 +83,18 @@ public class PlayerInputManager : MonoBehaviour
 
     public void InteractButton()
     {
-        Debug.Log("what is happening"+interactPressed );
         interactPressed = true;
+    }
+    public void TeleportButton()
+    {
+        teleportPressed = true;
     }
 
  
     public void ResetOneFrameInputs()
     {
         jumpPressed = false;
+        teleportPressed =false;
         // interactPressed = false;
     }
 }

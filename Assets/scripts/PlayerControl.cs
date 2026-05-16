@@ -43,6 +43,22 @@ public class PlayerControl : MonoBehaviour
         _playerSpeed = _walkSpeed;
     }
 
+    public void TeleportTo(Transform targetPoint)
+    {
+        if (targetPoint == null) return;
+
+        _controller.enabled = false;
+
+        transform.position = targetPoint.position;
+        transform.rotation = targetPoint.rotation;
+
+        // Reset gravity / falling velocity
+        _playerVelocity = Vector3.zero;
+
+        // Enable CharacterController again
+        _controller.enabled = true;
+    }
+
     private void Update()
     {
         HandleInput();
