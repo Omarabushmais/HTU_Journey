@@ -5,6 +5,7 @@ public class TeleportUIManager : MonoBehaviour
     [Header("Player")]
     public Transform player;
     public PlayerControl playerControl;
+    [SerializeField] private GameObject chatUI;
 
     [Header("UI")]
     public GameObject teleportPanel;
@@ -28,15 +29,15 @@ public class TeleportUIManager : MonoBehaviour
     private void Update()
     {
 
+        if (chatUI != null && chatUI.activeSelf)
+        return;
+
         if (PlayerInputManager.Instance != null && PlayerInputManager.Instance.teleportPressed)
         {
             ToggleTeleportPanel();
         }
         
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            ToggleTeleportPanel();
-        }
+        
     }
 
     public void ToggleTeleportPanel()
