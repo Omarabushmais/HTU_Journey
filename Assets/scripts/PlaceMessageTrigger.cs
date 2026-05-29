@@ -5,7 +5,7 @@ using TMPro;
 public class PlaceMessageTrigger : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject messagePanel;
+    public GameObject fullMessageUI;   // Parent object that contains bot + box + text
     public TextMeshProUGUI messageText;
 
     [Header("Message Settings")]
@@ -19,16 +19,15 @@ public class PlaceMessageTrigger : MonoBehaviour
 
     private void Start()
     {
-        if (messagePanel != null)
+        if (fullMessageUI != null)
         {
-            messagePanel.SetActive(false);
+            fullMessageUI.SetActive(false);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-
         if (hasShown) return;
 
         ShowMessage();
@@ -37,10 +36,10 @@ public class PlaceMessageTrigger : MonoBehaviour
 
     private void ShowMessage()
     {
-        if (messagePanel == null || messageText == null) return;
+        if (fullMessageUI == null || messageText == null) return;
 
         messageText.text = placeMessage;
-        messagePanel.SetActive(true);
+        fullMessageUI.SetActive(true);
 
         if (hideCoroutine != null)
         {
@@ -54,6 +53,6 @@ public class PlaceMessageTrigger : MonoBehaviour
     {
         yield return new WaitForSeconds(displayTime);
 
-        messagePanel.SetActive(false);
+        fullMessageUI.SetActive(false);
     }
 }
