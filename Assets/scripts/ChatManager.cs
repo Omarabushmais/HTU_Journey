@@ -11,7 +11,7 @@ public class ChatManager : MonoBehaviour
     public GameObject dialogueUI;
     bool isOpen;
     public static ChatManager Instance;
-    private string webhookUrl = "https://n8n.ez-moh-n8n.online/webhook/15d0ec83-3023-4871-8b5a-8bd3344f4266";
+    private string webhookUrl = "https://mustafa2004.app.n8n.cloud/webhook/15d0ec83-3023-4871-8b5a-8bd3344f4266";
 
     private string currentNpcId;
 
