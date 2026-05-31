@@ -68,7 +68,8 @@ public class ChatManager : MonoBehaviour
             return;
         }
 
-        AddMessage("You: " + userMessage);
+        //AddMessage("You: " + userMessage);
+        AddMessage("<align=right><color=#4997fc><b>You:</b></color> " + userMessage + "</align>");
         StartCoroutine(SendToN8n(userMessage));
 
         inputField.text = "";
@@ -160,7 +161,8 @@ public class ChatManager : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string response = request.downloadHandler.text.Trim();
-            AddMessage("Bot: " + response);
+            //AddMessage("Bot: " + response);
+            AddMessage("<color=#ff5555><b>Bot:</b></color> " + response);
         }
         else
         {
